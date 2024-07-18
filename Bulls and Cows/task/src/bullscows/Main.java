@@ -5,11 +5,52 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
 
-        //Stage2(scanner.nextLine());
-        Stage3(scanner.nextInt());
+        Stage4();
+
+
     }
+
+    private static void Stage4() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please, enter the secret code's length:");
+        int codeLength = scanner.nextInt();
+        scanner.nextLine(); // to avoid delimiter error from scanner
+
+        System.out.println("Okay, let's start a game!");
+
+        if (codeLength < 10) {
+            String secretNumber = "1234567890".substring(0, codeLength);
+            int bulls = 0;
+            int count = 1;
+            while (bulls != codeLength) {
+
+
+                System.out.println("Turn " + count + ":");
+
+                int[] result = CheckForBulls(scanner.nextLine(), secretNumber);
+                bulls = result[0];
+                int cows = result[1];
+
+
+                StringBuilder stringBuilder = new StringBuilder();
+
+                if (bulls == 0 && cows == 0) {
+                    System.out.println("Grade: None");
+                } else {
+                    stringBuilder.append("Grade: ").append(bulls >= 1 ? bulls : "").append(bulls > 1 ? " bulls " : bulls == 1 ? " bull " : "").append(bulls >= 1 && cows >= 1 ? " and " : "").append(cows > 0 ? cows : "").append(cows > 1 ? " cows " : cows == 1 ? " cow " : "");
+
+
+                    System.out.println(stringBuilder);
+                }
+                count++;
+            }
+            System.out.println("Congratulations! You guessed the secret code.");
+        } else {
+            System.out.println("Error");
+        }
+    }
+
 
     public static void Stage3(int input) {
 
@@ -27,7 +68,7 @@ public class Main {
 
     public static void Stage2(String input) {
         char[] inputArr = input.toCharArray();
-        int[] result = CheckForBulls(inputArr, "9305");
+        int[] result = CheckForBulls(input, "9305");
         if (result[0] > 0) {
             System.out.println("Grade:" + result[0] + " bull(s) and " + result[1] + " cow(s). The secret code is 9305.");
         } else if (result[0] == 0 && result[1] > 0) {
@@ -38,16 +79,17 @@ public class Main {
 
     }
 
-    public static int[] CheckForBulls(char[] input, String code) {
+    public static int[] CheckForBulls(String input, String code) {
         int bulls = 0;
         int cows = 0;
         char[] codeArr = code.toCharArray();
+        char[] inputArr = input.toCharArray();
 
-        for (int i = 0; i < input.length; i++) {
+        for (int i = 0; i < inputArr.length; i++) {
             for (int j = 0; j < codeArr.length; j++) {
-                if (i == j && input[i] == codeArr[j]) {
+                if (i == j && inputArr[i] == codeArr[j]) {
                     bulls++;
-                } else if (i != j && input[i] == codeArr[j]) {
+                } else if (i != j && inputArr[i] == codeArr[j]) {
                     cows++;
                 }
             }
