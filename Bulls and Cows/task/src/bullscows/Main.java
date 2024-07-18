@@ -6,9 +6,97 @@ public class Main {
     public static void main(String[] args) {
 
 
-        Stage4();
+        Stage5();
 
 
+    }
+
+    private static void Stage5() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please, enter the secret code's length:");
+        int codeLength = scanner.nextInt();
+
+        System.out.println("Input the number of possible symbols in the code:");
+        int possibleSymbols = scanner.nextInt();
+
+        scanner.nextLine(); // to avoid delimiter error from scanner
+        if (codeLength > 0 && codeLength <= 36) {
+
+            String secretNumber = GenerateSecretCode(codeLength, possibleSymbols);
+
+            // stars and range
+            String stars = new String(new char[possibleSymbols]).replace('\0', '*');
+            char initChar = 'a';
+            if (possibleSymbols > 10) {
+                for (int i = 1; i < possibleSymbols - 10; i++) {
+                    ++initChar;
+                }
+            }
+
+            String rangeString = possibleSymbols > 10 ? String.valueOf(initChar) : "";
+
+            System.out.println("The secret is prepared: " + stars + " (0-9, a-" + rangeString + ")");
+
+            System.out.println("Okay, let's start a game!");
+
+            int bulls = 0;
+            int count = 1;
+            while (bulls != codeLength) {
+
+
+                System.out.println("Turn " + count + ": Code-> " + secretNumber);
+
+                int[] result = CheckForBulls(scanner.nextLine(), secretNumber);
+                bulls = result[0];
+                int cows = result[1];
+
+
+                StringBuilder stringBuilder = new StringBuilder();
+
+                if (bulls == 0 && cows == 0) {
+                    System.out.println("Grade: None");
+                } else {
+                    stringBuilder.append("Grade: ").append(bulls >= 1 ? bulls : "").append(bulls > 1 ? " bulls " : bulls == 1 ? " bull " : "").append(bulls >= 1 && cows >= 1 ? " and " : "").append(cows > 0 ? cows : "").append(cows > 1 ? " cows " : cows == 1 ? " cow " : "");
+
+
+                    System.out.println(stringBuilder);
+                }
+                count++;
+            }
+            System.out.println("Congratulations! You guessed the secret code.");
+        } else {
+            System.out.println("Error");
+        }
+    }
+
+    private static String GenerateSecretCode(int codeLength, int possibleSymbols) {
+
+        Random rn = new Random();
+        int rnMax = rn.nextInt(10) + 1;
+
+        List<String> numbers = new ArrayList<String>();
+
+        for (int i = 0; i <= rnMax; i++) {
+            numbers.add(String.valueOf(i));
+        }
+
+        List<String> letters = new ArrayList<String>();
+
+        char letter = 'a';
+        for (int i = 0; i < codeLength - numbers.size(); i++) {
+            letters.add(String.valueOf(letter));
+            ++letter;
+        }
+        numbers.addAll(letters);
+
+        Collections.shuffle(numbers);
+
+
+        StringBuilder temp = new StringBuilder();
+        for (String e : numbers) {
+            temp.append(e);
+        }
+        return temp.toString();
     }
 
     private static void Stage4() {
@@ -70,7 +158,7 @@ public class Main {
         }
 
         StringBuilder temp = new StringBuilder();
-        for(int e : numbers){
+        for (int e : numbers) {
             temp.append(e);
         }
         return temp.toString();
