@@ -6,14 +6,15 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-        char[] inputArr = input.toCharArray();
-        int[] result = CheckForBulls(inputArr, "9305");
+        int input = scanner.nextInt();
 
-        PrintResult(result);
+
+        //Stage2(scanner.nextLine());
     }
 
-    public static void PrintResult(int[] result) {
+    public static void Stage2(String input) {
+        char[] inputArr = input.toCharArray();
+        int[] result = CheckForBulls(inputArr, "9305");
         if (result[0] > 0) {
             System.out.println("Grade:" + result[0]
                     + " bull(s) and " + result[1]
