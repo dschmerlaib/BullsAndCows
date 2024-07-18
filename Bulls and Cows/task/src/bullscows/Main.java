@@ -20,7 +20,7 @@ public class Main {
         System.out.println("Okay, let's start a game!");
 
         if (codeLength < 10) {
-            String secretNumber = "1234567890".substring(0, codeLength);
+            String secretNumber = GenerateSecretNumber(codeLength);
             int bulls = 0;
             int count = 1;
             while (bulls != codeLength) {
@@ -49,6 +49,31 @@ public class Main {
         } else {
             System.out.println("Error");
         }
+    }
+
+    private static String GenerateSecretNumber(int codeLength) {
+        //return "1234567890".substring(0, codeLength);
+
+        // Stage 5 Code below
+
+        List<Integer> numbers = new ArrayList<Integer>();
+
+        for (int i = 1; i <= codeLength; i++) {
+            numbers.add(i);
+        }
+
+        Collections.shuffle(numbers);
+        if (numbers.get(0) == 0) {
+
+            numbers.remove(0);
+            numbers.add(0);
+        }
+
+        StringBuilder temp = new StringBuilder();
+        for(int e : numbers){
+            temp.append(e);
+        }
+        return temp.toString();
     }
 
 
