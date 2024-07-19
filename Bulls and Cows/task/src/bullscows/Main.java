@@ -14,12 +14,23 @@ public class Main {
     private static void Stage5() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please, enter the secret code's length:");
-        int codeLength = scanner.nextInt();
+        int codeLength =TryParseInt(scanner);
 
         System.out.println("Input the number of possible symbols in the code:");
-        int possibleSymbols = scanner.nextInt();
+        int possibleSymbols = TryParseInt(scanner);
 
         scanner.nextLine(); // to avoid delimiter error from scanner
+
+        if (possibleSymbols < codeLength) {
+            System.out.println("Error possibleSymbols < codeLength ");
+            System.exit(0);
+        }
+        if (possibleSymbols > 36) {
+            System.out.println("Error possibleSymbols > 36 ");
+            System.exit(0);
+        }
+
+
         if (codeLength > 0 && codeLength <= 36) {
 
             String secretNumber = GenerateSecretCode(codeLength, possibleSymbols);
@@ -65,7 +76,17 @@ public class Main {
             }
             System.out.println("Congratulations! You guessed the secret code.");
         } else {
-            System.out.println("Error");
+            System.out.println("Error Ende");
+        }
+    }
+
+    private static int TryParseInt(Scanner scanner) {
+        try{
+            return scanner.nextInt();
+        }catch (Exception e){
+            System.out.println("Error No Number");
+            System.exit(0);
+            return 0;
         }
     }
 
